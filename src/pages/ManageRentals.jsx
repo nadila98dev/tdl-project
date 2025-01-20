@@ -1,67 +1,42 @@
-import React, { useState } from "react";
+import React from "react";
+import { toReadableDate } from "../utilities/formatter";
 
-const BrowseBooks = () => {
-  const bookList = [
+const ManageRentals = () => {
+  const rentals = [
     {
       bookId: "23023",
-      title: "The Secret of the World",
-      author: "James Riley",
-      stock: 5,
+      userId: "1001",
+      userName: "James Riley",
+      bookTitle: "The Secret of the World",
+      dateOfRent: "2025-01-19T00:00:00Z",
+      dateOfReturn: "2025-01-30T00:00:00Z",
+      status: "Returned",
     },
     {
       bookId: "23024",
-      title: "Mystery of the Lost Island",
-      author: "Anna Smith",
-      stock: 3,
+      userId: "1002",
+      userName: "Anna Smith",
+      bookTitle: "Mystery of the Lost Island",
+      dateOfRent: "2025-02-01T00:00:00Z",
+      dateOfReturn: "2025-02-10T00:00:00Z",
+      status: "Overdue",
     },
     {
       bookId: "23025",
-      title: "Adventures in Wonderland",
-      author: "John Doe",
-      stock: 7,
-    },
-    {
-      bookId: "23026",
-      title: "Journey to the Center of the Earth",
-      author: "Jules Verne",
-      stock: 4,
-    },
-    {
-      bookId: "23027",
-      title: "The Great Gatsby",
-      author: "F. Scott Fitzgerald",
-      stock: 6,
+      userId: "1003",
+      userName: "John Doe",
+      bookTitle: "Adventures in Wonderland",
+      dateOfRent: "2025-03-05T00:00:00Z",
+      dateOfReturn: "2025-03-15T00:00:00Z",
+      status: "Returned",
     },
   ];
 
-  const [selectedBooks, setSelectedBooks] = useState([]);
-
-  const handleCheckboxChange = (bookId) => {
-    setSelectedBooks((prevSelectedBooks) =>
-      prevSelectedBooks.includes(bookId)
-        ? prevSelectedBooks.filter((id) => id !== bookId)
-        : [...prevSelectedBooks, bookId]
-    );
-  };
-
-  const handleRequestRent = () => {
-    // Handle the request to rent the selected books
-    console.log("Requesting to rent books:", selectedBooks);
-  };
-
   return (
-    <div className="grow-2">
-      <h2 className="font-bold text-xl">Browse Books</h2>
-      <h5>Explore the list of available books</h5>
+    <div>
+      <h2 className="font-bold text-xl">Manage Rentals</h2>
+      <h5>Manage Rentals of the users</h5>
       <div className="p-5">
-        <div className="flex flex-row justify-end mb-4">
-          <button
-            onClick={handleRequestRent}
-            className="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5"
-          >
-            Request Rent
-          </button>
-        </div>
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
           <div className="pb-4 bg-white">
             <label htmlFor="table-search" className="sr-only">
@@ -89,7 +64,7 @@ const BrowseBooks = () => {
                 type="text"
                 id="table-search"
                 className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Search for books"
+                placeholder="Search for items"
               />
             </div>
           </div>
@@ -102,17 +77,6 @@ const BrowseBooks = () => {
                       id="checkbox-all-search"
                       type="checkbox"
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                      onChange={(e) => {
-                        if (e.target.checked) {
-                          setSelectedBooks(bookList.map((book) => book.bookId));
-                        } else {
-                          setSelectedBooks([]);
-                        }
-                      }}
-                      checked={
-                        selectedBooks.length === bookList.length &&
-                        bookList.length > 0
-                      }
                     />
                     <label htmlFor="checkbox-all-search" className="sr-only">
                       checkbox
@@ -123,18 +87,27 @@ const BrowseBooks = () => {
                   Book ID
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Title
+                  User ID
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Author
+                  Person of Rent
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Stock
+                  Book Title
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Date of Rent
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Date of Return
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Status
                 </th>
               </tr>
             </thead>
             <tbody>
-              {bookList.map((book, index) => (
+              {rentals.map((rental, index) => (
                 <tr key={index} className="bg-white border-b hover:bg-gray-50">
                   <td className="w-4 p-4">
                     <div className="flex items-center">
@@ -142,8 +115,6 @@ const BrowseBooks = () => {
                         id={`checkbox-table-search-${index}`}
                         type="checkbox"
                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                        onChange={() => handleCheckboxChange(book.bookId)}
-                        checked={selectedBooks.includes(book.bookId)}
                       />
                       <label
                         htmlFor={`checkbox-table-search-${index}`}
@@ -157,11 +128,18 @@ const BrowseBooks = () => {
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                   >
-                    {book.bookId}
+                    {rental.bookId}
                   </th>
-                  <td className="px-6 py-4">{book.title}</td>
-                  <td className="px-6 py-4">{book.author}</td>
-                  <td className="px-6 py-4">{book.stock}</td>
+                  <td className="px-6 py-4">{rental.userId}</td>
+                  <td className="px-6 py-4">{rental.userName}</td>
+                  <td className="px-6 py-4">{rental.bookTitle}</td>
+                  <td className="px-6 py-4">
+                    {toReadableDate(rental.dateOfRent)}
+                  </td>
+                  <td className="px-6 py-4">
+                    {toReadableDate(rental.dateOfReturn)}
+                  </td>
+                  <td className="px-6 py-4">{rental.status}</td>
                 </tr>
               ))}
             </tbody>
@@ -172,4 +150,4 @@ const BrowseBooks = () => {
   );
 };
 
-export default BrowseBooks;
+export default ManageRentals;
