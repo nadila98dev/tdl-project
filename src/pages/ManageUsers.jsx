@@ -1,6 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
+import Modal from "react-modal";
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
 
 const ManageUsers = () => {
+  let subtitle;
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = "#f00";
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   const userList = [
     {
       userId: "1001",
@@ -151,6 +179,7 @@ const ManageUsers = () => {
                       <button
                         type="button"
                         className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+                        onClick={openModal}
                       >
                         Delete
                       </button>
@@ -167,6 +196,30 @@ const ManageUsers = () => {
             </table>
           </div>
         </div>
+      </div>
+      <div className="flex ">
+        <Modal
+          isOpen={modalIsOpen}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Example Modal"
+        >
+          <div className="flex flex-col">
+            <div className="flex justify-end">
+              <button onClick={closeModal}>Close</button>
+            </div>
+
+            <div>Are you sure you want to delete the data ?</div>
+
+            <div className="flex flex-row justify-evenly pt-10">
+              <button type="button">Yes</button>
+              <button type="button" onClick={closeModal}>
+                No
+              </button>
+            </div>
+          </div>
+        </Modal>
       </div>
     </div>
   );
