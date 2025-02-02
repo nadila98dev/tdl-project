@@ -1,8 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { getAllUsers } from "../service/api/users";
+import { getLoginSession } from "../service/api/auth";
 
 const Login = () => {
   const navigate = useNavigate();
+
+  const LoginTest = getLoginSession();
+
+  console.log("test", LoginTest);
 
   const handleLogin = () => {
     navigate("/dashboard");

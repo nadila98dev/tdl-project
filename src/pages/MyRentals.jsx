@@ -2,6 +2,24 @@ import React from "react";
 import { toReadableDate } from "../utilities/formatter";
 
 const MyRentals = () => {
+  const rentalsList = [
+    {
+      id: 1,
+      title: "The Secret",
+      author: "James Riley",
+      dateOfRent: "2025-01-19T00:00:00Z",
+      dateOfReturn: null,
+      status: "Rent",
+    },
+    {
+      id: 2,
+      title: "The World",
+      author: "John Doe",
+      dateOfRent: "2025-01-19T00:00:00Z",
+      dateOfReturn: "2025-01-25T00:00:00Z",
+      status: "Returned",
+    },
+  ];
   const dateString = "2025-01-19T00:00:00Z"; // Example ISO date string
   return (
     <div>
@@ -35,20 +53,20 @@ const MyRentals = () => {
                 <input
                   type="text"
                   id="table-search"
-                  className="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500   dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500   "
                   placeholder="Search for items"
                 ></input>
               </div>
             </div>
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50  ">
                 <tr>
                   <th scope="col" className="p-4">
                     <div className="flex items-center">
                       <input
                         id="checkbox-all-search"
                         type="checkbox"
-                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 "
                       ></input>
                       <label for="checkbox-all-search" className="sr-only">
                         checkbox
@@ -68,6 +86,9 @@ const MyRentals = () => {
                     Date of Rent
                   </th>
                   <th scope="col" className="px-6 py-3">
+                    Date of Return
+                  </th>
+                  <th scope="col" className="px-6 py-3">
                     Status
                   </th>
                   <th scope="col" className="px-6 py-3">
@@ -76,38 +97,50 @@ const MyRentals = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <td className="w-4 p-4">
-                    <div className="flex items-center">
-                      <input
-                        id="checkbox-table-search-1"
-                        type="checkbox"
-                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                      ></input>
-                      <label for="checkbox-table-search-1" className="sr-only">
-                        checkbox
-                      </label>
-                    </div>
-                  </td>
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                  >
-                    23023
-                  </th>
-                  <td className="px-6 py-4"> The Secret of the World</td>
-                  <td className="px-6 py-4">James Riley</td>
-                  <td className="px-6 py-4">{toReadableDate(dateString)}</td>
-                  <td className="px-6 py-4">Rent</td>
-                  <td className="px-6 py-4">
-                    <button
-                      type="button"
-                      class="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900"
+                {rentalsList.map((rental) => (
+                  <tr className="bg-white border-b ">
+                    <td className="w-4 p-4">
+                      <div className="flex items-center">
+                        <input
+                          id="checkbox-table-search-1"
+                          type="checkbox"
+                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  "
+                        ></input>
+                        <label
+                          for="checkbox-table-search-1"
+                          className="sr-only"
+                        >
+                          checkbox
+                        </label>
+                      </div>
+                    </td>
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                     >
-                      Return
-                    </button>
-                  </td>
-                </tr>
+                      {rental.id}
+                    </th>
+                    <td className="px-6 py-4">{rental.title}</td>
+                    <td className="px-6 py-4">{rental.author}</td>
+                    <td className="px-6 py-4">
+                      {toReadableDate(rental.dateOfRent)}
+                    </td>
+                    <td className="px-6 py-4">
+                      {!rental.dateOfRent
+                        ? "-"
+                        : toReadableDate(rental.dateOfReturn)}
+                    </td>
+                    <td className="px-6 py-4">{rental.status}</td>
+                    <td className="px-6 py-4">
+                      <button
+                        type="button"
+                        class="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 0"
+                      >
+                        {rental.status === "Rent" ? "Return" : "Returned"}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

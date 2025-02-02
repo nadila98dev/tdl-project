@@ -17,6 +17,7 @@ import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ManageRentals from "./pages/ManageRentals";
+import NewBook from "./pages/NewBook";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function MainContent() {
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/manage-books" element={<ManageBooks />} />
+          <Route path="/new-book" element={<NewBook />} />
           <Route path="/manage-rentals" element={<ManageRentals />} />
           <Route path="/manage-users" element={<ManageUsers />} />
           <Route path="/browse-books" element={<BrowseBooks />} />

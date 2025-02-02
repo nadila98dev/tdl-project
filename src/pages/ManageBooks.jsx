@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ManageBooks = () => {
   const bookList = [
@@ -35,6 +36,7 @@ const ManageBooks = () => {
   ];
 
   const [selectedBooks, setSelectedBooks] = useState([]);
+  const navigate = useNavigate();
 
   const handleCheckedChange = (bookId) => {
     setSelectedBooks((prevSelectedBooks) =>
@@ -44,13 +46,20 @@ const ManageBooks = () => {
     );
   };
 
+  const handleNewBook = () => {
+    navigate("/new-book");
+  };
+
   return (
     <div className="grow-2">
       <h2 className="font-bold text-xl">Manage Books</h2>
       <h5>Manage the list of Books</h5>
       <div className="p-5">
         <div className="flex flex-row justify-end">
-          <button className="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900">
+          <button
+            className="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900"
+            onClick={handleNewBook}
+          >
             Add New Book
           </button>
         </div>
